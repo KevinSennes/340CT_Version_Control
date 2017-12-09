@@ -1,28 +1,18 @@
-package Stock;
-
-/**
- * Stock system example.
- *
- * @author Kevin Sennes
- * @version 0.2
- */
+package com.company;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    //instance variables
-    private boolean exit;
 
-    //an arraylist, but instead of Strings, we're using a new class we've created, called Item
-    // that has the variables we want (ID, name, price, quantity)
-    ArrayList<Item> stock = new ArrayList<>();
+    boolean exit;
+    ArrayList<String> array1 = new ArrayList<String>();
+    ArrayList<String> array2 = new ArrayList<String>();
+    ArrayList<String> array3 = new ArrayList<String>();
 
-    private String id;
-    private String name;
-    private String price;
-    private String quantity;
-
+    String item;
+    String price;
+    String ID;
     public static void main(String[] args) {
 
         Main main = new Main();
@@ -31,130 +21,81 @@ public class Main {
 
     }
 
-    public void runMenu() {
+    public void runMenu(){
         printHeader();
-        while (!exit) {
+        while(!exit){
             printMenu();
             int choice = getInput();
             performAction(choice);
         }
     }
 
-
-    public void printHeader() {
-        System.out.println("Mini-Market");
+    public void printHeader(){
+        System.out.println("KEVINS SHOP");
     }
 
-    public void printMenu() {
+    public void printMenu(){
         System.out.println("Please make a selection");
-        System.out.println("1) Add new stock"); //option 1 adding new stock item
-        System.out.println("2) showStockAtPosition"); //show location of stock item
-        System.out.println("3) View all stock"); //show all available stock items
-        System.out.println("4) Delete stock"); //delete stock item
-        System.out.println("0) exit"); //closes program
+        System.out.println("1) Add new stock");
+        System.out.println("2) showStockForDemo");
+        System.out.println("3) View all stock");
+        System.out.println("0) exit");
     }
 
-    public int getInput() {
-        Scanner kb = new Scanner(System.in); //scans user choice
+    public int getInput(){
+        Scanner kb = new Scanner(System.in);
         int choice = -1;
-        while (choice < 0 || choice > 4) { //options 0-4 only
+        while(choice < 0 || choice > 3){
             try {
                 System.out.println("Please enter your choice: ");
                 choice = Integer.parseInt(kb.nextLine());
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e){
                 System.out.println("Invalid Selection, please try again");
             }
         }
         return choice;
     }
 
-    public void performAction(int choice) {
-        switch (choice) {
+    public void performAction(int choice){
+        switch (choice){
             case 0:
                 exit = true;
-                System.out.print("Thank you for visiting Mini-Market"); //leaving message
+                System.out.print("Thank you for visiting Kevs shop");
                 break;
-            case 1: //choose 
+            case 1:
                 addNewItem();
                 break;
             case 2:
-                showStockAtPosition();
+                showStock();
                 break;
             case 3:
-                showAllStock();
-                break;
-            case 4:
-                deleteStock();
                 break;
         }
 
     }
 
-    public void addNewItem() {
+    public  void addNewItem(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter ID Number"); //add ID Number
-        id = scan.nextLine();
-
-        System.out.println("Please enter Item Name"); //add Item Name
-        name = scan.nextLine();
-
-        System.out.println("Please enter Item Price"); //add item price
-        price = scan.nextLine();
-
-        System.out.println("Please enter Item Quantity"); //add quantity question
-        quantity = scan.nextLine();
-
-        //now we have the 4 variables assigned, we can create a new Item object, and
-        // stick it in the stock array
-        Item item = new Item(id, name, price, quantity);
-
-        stock.add(item);
+        System.out.println("Please enter ID Number");
+        ID =  scan.nextLine();
+        array1.add(0, ID);
+        System.out.println("Please enter Item Name");
+        item  =  scan.nextLine();
+        array2.add(0, item);
+        System.out.println("Please enter Item Price");
+        price =  scan.nextLine();
+        array3.add(0, price);
     }
 
-    public void showAllStock() {
-         //Going to use a loop to go through any items in the stock array so we
-         //don't need to worry about how many are in there!!
-
-        for (int i = 0; i < stock.size(); i++) {
-            System.out.println("Stock item in place " + i + " is " + stock.get(i).getItemName());
-        }
-
+    public void showStock(){
+        System.out.println("First Item is: ");
+        String str = array1.get(0);
+        System.out.println(str);
+        String str2 = array2.get(0);
+        System.out.println(str2);
+        String str3 = array3.get(0);
+        System.out.println(str3);
     }
 
-    public void showStockAtPosition() {
-        Scanner reader = new Scanner(System.in); //user input
-        System.out.println("Enter an item position: ");
-        int position = Integer.parseInt(reader.nextLine());
-
-        try {
-            System.out.println("Stock item at that position is:\n" + stock.get(position).getItemName()
-                    + "\nID Number:\n" + stock.get(position).getItemID()
-                    + "\nItem Price in £:\n" + stock.get(position).getItemPrice()
-                    + "\nItem Quantity:\n" + stock.get(position).getItemQuantity());
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Sorry, no stock at that position");
-        }
-
-    }
-
-
-    public void deleteStock() {
-        Scanner reader = new Scanner(System.in); //user input maybe
-        System.out.println("Enter a position: ");
-        int position = Integer.parseInt(reader.nextLine());
-
-        /**
-         * Have this try-catch block incase they put in a number that doesn't exist, or type "sdghsdg!"
-         *
-         */
-        try {
-            stock.remove(position);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Sorry, no stock at that position");
-        }
-    }
 
 }
-
-
-
